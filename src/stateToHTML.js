@@ -4,7 +4,6 @@ import {Entity} from 'draft-js';
 import {
   getEntityRanges,
   BLOCK_TYPE,
-  ENTITY_TYPE,
   INLINE_STYLE,
 } from 'draft-js-utils';
 
@@ -25,14 +24,82 @@ const {
 const INDENT = '  ';
 const BREAK = '<br>';
 
-// Map entity data to element attributes.
-const ENTITY_ATTR_MAP: AttrMap = {
-  [ENTITY_TYPE.LINK]: {url: 'href', rel: 'rel', target: 'target', title: 'title', className: 'class'},
-  [ENTITY_TYPE.IMAGE]: {src: 'src', height: 'height', width: 'width', alt: 'alt', className: 'class'},
+const ENTITY_TYPE = {
+  LINK: 'LINK',
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO',
+  AUDIO: 'AUDIO',
+  HYPERLINK: 'HYPERLINK',
+  YOUTUBE: 'YOUTUBE',
+  DOCUMENT: 'DOCUMENT'
 };
 
 // Map entity data to element attributes.
+const ENTITY_ATTR_MAP: AttrMap = {
+  [ENTITY_TYPE.DOCUMENT]: {fileId: 'fileId',className: 'class'},
+  [ENTITY_TYPE.HYPERLINK]: {src: 'src',className: 'class'},
+  [ENTITY_TYPE.YOUTUBE]: {src: 'src', width: 'width', height: 'height',className: 'class'},
+  [ENTITY_TYPE.LINK]: {url: 'href', rel: 'rel', target: 'target', title: 'title', className: 'class'},
+  [ENTITY_TYPE.IMAGE]: {fileId: 'fileId', height: 'height', width: 'width', alt: 'alt', className: 'class'},
+  [ENTITY_TYPE.VIDEO]: { fileId:'fileId', height: 'height', width: 'width', alt: 'alt', className: 'class', controls: 'controls'},
+  [ENTITY_TYPE.AUDIO]: { fileId:'fileId', height: 'height', width: 'width', alt: 'alt', className: 'class', controls: 'controls'}
+};
+
+// Map entity data to element attributes.
+
 const DATA_TO_ATTR = {
+  [ENTITY_TYPE.DOCUMENT](entityType: string, entity: EntityInstance): StringMap {
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let data = entity.getData();
+    let attrs = {};
+    for (let dataKey of Object.keys(data)) {
+      let dataValue = data[dataKey];
+      if (attrMap.hasOwnProperty(dataKey)) {
+        let attrKey = attrMap[dataKey];
+        attrs[attrKey] = dataValue;
+      }
+    }
+    return attrs;
+  },
+  [ENTITY_TYPE.HYPERLINK](entityType: string, entity: EntityInstance): StringMap {
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let data = entity.getData();
+    let attrs = {};
+    for (let dataKey of Object.keys(data)) {
+      let dataValue = data[dataKey];
+      if (attrMap.hasOwnProperty(dataKey)) {
+        let attrKey = attrMap[dataKey];
+        attrs[attrKey] = dataValue;
+      }
+    }
+    return attrs;
+  },
+  [ENTITY_TYPE.AUDIO](entityType: string, entity: EntityInstance): StringMap {
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let data = entity.getData();
+    let attrs = {};
+    for (let dataKey of Object.keys(data)) {
+      let dataValue = data[dataKey];
+      if (attrMap.hasOwnProperty(dataKey)) {
+        let attrKey = attrMap[dataKey];
+        attrs[attrKey] = dataValue;
+      }
+    }
+    return attrs;
+  },
+  [ENTITY_TYPE.YOUTUBE](entityType: string, entity: EntityInstance): StringMap {
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let data = entity.getData();
+    let attrs = {};
+    for (let dataKey of Object.keys(data)) {
+      let dataValue = data[dataKey];
+      if (attrMap.hasOwnProperty(dataKey)) {
+        let attrKey = attrMap[dataKey];
+        attrs[attrKey] = dataValue;
+      }
+    }
+    return attrs;
+  },
   [ENTITY_TYPE.LINK](entityType: string, entity: EntityInstance): StringMap {
     let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
     let data = entity.getData();
@@ -47,6 +114,20 @@ const DATA_TO_ATTR = {
     return attrs;
   },
   [ENTITY_TYPE.IMAGE](entityType: string, entity: EntityInstance): StringMap {
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let data = entity.getData();
+    console.log(data);
+    let attrs = {};
+    for (let dataKey of Object.keys(data)) {
+      let dataValue = data[dataKey];
+      if (attrMap.hasOwnProperty(dataKey)) {
+        let attrKey = attrMap[dataKey];
+        attrs[attrKey] = dataValue;
+      }
+    }
+    return attrs;
+  },
+  [ENTITY_TYPE.VIDEO](entityType: string, entity: EntityInstance): StringMap {
     let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
     let data = entity.getData();
     let attrs = {};
@@ -256,15 +337,28 @@ class MarkupGenerator {
       }).join('');
       let entity = entityKey ? Entity.get(entityKey) : null;
       let entityType = (entity == null) ? null : entity.getType();
-      if (entityType != null && entityType === ENTITY_TYPE.LINK) {
+      console.log(entityType);
+      if (entityType != null) {
         let attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null;
         let strAttrs = stringifyAttrs(attrs);
-        return `<a${strAttrs}>${content}</a>`;
-      } else if (entityType != null && entityType === ENTITY_TYPE.IMAGE) {
-        let attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null;
-        let strAttrs = stringifyAttrs(attrs);
-        return `<img${strAttrs}/>`;
-      } else {
+        console.log(strAttrs);
+        switch(entityType) {
+          case ENTITY_TYPE.LINK:
+            return `<a${strAttrs}>${content}</a>`;
+          case ENTITY_TYPE.IMAGE:
+            return `<img${strAttrs}/>`;
+          case ENTITY_TYPE.VIDEO:
+            return `<video${strAttrs}/>`;
+          case ENTITY_TYPE.YOUTUBE:
+            return `<iframe${strAttrs}/>`;
+          case ENTITY_TYPE.AUDIO:
+            return `<audio${strAttrs}/>`;
+          case ENTITY_TYPE.HYPERLINK:
+            return `<hyperlink${strAttrs}>hyperlink</hyperlink>`;
+          default:
+            return content;
+        }
+      }else{
         return content;
       }
     }).join('');

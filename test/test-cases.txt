@@ -29,3 +29,7 @@
   <li>One</li>
   <li>Two</li>
 </ol>
+
+# Entity with VIDEO
+{"entityMap":{"0":{"type":"VIDEO","mutability":"IMMUTABLE","data":{"src":"blob:http%3A//localhost%3A3000/34515925-b268-4778-9bc1-416014d00163"}}},"blocks":[{"key":"5r13p","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]},{"key":"979ke","text":" ","type":"atomic","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":0,"length":1,"key":0}]},{"key":"4k5ba","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+<video src="blob:http%3A//localhost%3A3000/34515925-b268-4778-9bc1-416014d00163" controls /><p></p>

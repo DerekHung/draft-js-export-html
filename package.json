@@ -1,6 +1,6 @@
 {
   "name": "draft-js-export-html",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "DraftJS: Export ContentState to HTML",
   "main": "lib/main.js",
   "scripts": {
@@ -8,16 +8,17 @@
     "lint": "eslint --max-warnings 0 .",
     "typecheck": "flow",
     "prepublish": "npm run build",
-    "test": "npm run lint && npm run typecheck && npm run test-src",
+    "test": "npm run typecheck && npm run test-src",
     "test-src": "mocha src/__tests__/*.js src/**/__tests__/*.js",
     "watch": "npm run build -- --watch"
   },
   "dependencies": {
-    "draft-js-utils": "^0.1.5"
-  },
-  "peerDependencies": {
+    "draft-js-utils": "^0.1.5",
     "draft-js": ">=0.5.0",
     "immutable": "3.x.x"
+  },
+  "peerDependencies": {
+    
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
