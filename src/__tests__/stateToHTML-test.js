@@ -14,6 +14,7 @@ let testCasesRaw = fs.readFileSync(
   'utf8',
 );
 
+
 let testCases = testCasesRaw.slice(1).trim().split(SEP).map((text) => {
   let lines = text.split('\n');
   let description = lines.shift().trim();
@@ -24,12 +25,10 @@ let testCases = testCasesRaw.slice(1).trim().split(SEP).map((text) => {
 
 describe('stateToHTML', () => {
   testCases.forEach((testCase) => {
+    console.log(testCase);
     let {description, state, html} = testCase;
     it(`should render ${description}`, () => {
-      let contentState = ContentState.createFromBlockArray(
-        convertFromRaw(state)
-      );
-      expect(stateToHTML(contentState)).toBe(html);
+      expect(stateToHTML(convertFromRaw(state))).toBe(html);
     });
   });
 });

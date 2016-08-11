@@ -31,18 +31,20 @@ const ENTITY_TYPE = {
   AUDIO: 'AUDIO',
   HYPERLINK: 'HYPERLINK',
   YOUTUBE: 'YOUTUBE',
-  DOCUMENT: 'DOCUMENT'
+  DOCUMENT: 'DOCUMENT',
+  MEMBER: 'MEMBER'
 };
 
 // Map entity data to element attributes.
 const ENTITY_ATTR_MAP: AttrMap = {
-  [ENTITY_TYPE.DOCUMENT]: {fileId: 'fileId',className: 'class'},
-  [ENTITY_TYPE.HYPERLINK]: {src: 'src',className: 'class'},
-  [ENTITY_TYPE.YOUTUBE]: {src: 'src', width: 'width', height: 'height',className: 'class'},
-  [ENTITY_TYPE.LINK]: {url: 'href', rel: 'rel', target: 'target', title: 'title', className: 'class'},
-  [ENTITY_TYPE.IMAGE]: {fileId: 'fileId', height: 'height', width: 'width', alt: 'alt', className: 'class'},
-  [ENTITY_TYPE.VIDEO]: { fileId:'fileId', height: 'height', width: 'width', alt: 'alt', className: 'class', controls: 'controls'},
-  [ENTITY_TYPE.AUDIO]: { fileId:'fileId', height: 'height', width: 'width', alt: 'alt', className: 'class', controls: 'controls'}
+  [ENTITY_TYPE.DOCUMENT]: {fileId: 'fileId'},
+  [ENTITY_TYPE.HYPERLINK]: {fileId: 'fileId', url: 'url'},
+  [ENTITY_TYPE.YOUTUBE]: {src: 'src',file: 'file', url:'url'},
+  [ENTITY_TYPE.LINK]: {url: 'href'},
+  [ENTITY_TYPE.IMAGE]: {fileId: 'fileId'},
+  [ENTITY_TYPE.VIDEO]: { fileId:'fileId'},
+  [ENTITY_TYPE.AUDIO]: { fileId:'fileId'}.fileId,
+  [ENTITY_TYPE.MEMBER]: { pid: 'pid'}
 };
 
 // Map entity data to element attributes.
@@ -72,6 +74,7 @@ const DATA_TO_ATTR = {
         attrs[attrKey] = dataValue;
       }
     }
+    attrs.tagType = 'HYPERLINK';
     return attrs;
   },
   [ENTITY_TYPE.AUDIO](entityType: string, entity: EntityInstance): StringMap {
@@ -98,6 +101,7 @@ const DATA_TO_ATTR = {
         attrs[attrKey] = dataValue;
       }
     }
+    attrs.tagType = 'YOUTUBE';
     return attrs;
   },
   [ENTITY_TYPE.LINK](entityType: string, entity: EntityInstance): StringMap {
@@ -137,6 +141,20 @@ const DATA_TO_ATTR = {
         attrs[attrKey] = dataValue;
       }
     }
+    return attrs;
+  },
+  [ENTITY_TYPE.MEMBER](entityType: string, entity: EntityInstance): StringMap {
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let data = entity.getData();
+    let attrs = {};
+    for (let dataKey of Object.keys(data)) {
+      let dataValue = data[dataKey];
+      if (attrMap.hasOwnProperty(dataKey)) {
+        let attrKey = attrMap[dataKey];
+        attrs[attrKey] = dataValue;
+      }
+    }
+    attrs.tagType = 'MEMBER';
     return attrs;
   },
 };
@@ -346,12 +364,13 @@ class MarkupGenerator {
             return `<img${strAttrs}/>`;
           case ENTITY_TYPE.VIDEO:
             return `<video${strAttrs}/>`;
-          case ENTITY_TYPE.YOUTUBE:
-            return `<iframe${strAttrs}/>`;
           case ENTITY_TYPE.AUDIO:
             return `<audio${strAttrs}/>`;
           case ENTITY_TYPE.HYPERLINK:
-            return `<hyperlink${strAttrs}>hyperlink</hyperlink>`;
+          case ENTITY_TYPE.YOUTUBE:
+          case ENTITY_TYPE.DOCUMENT:
+          case ENTITY_TYPE.MEMBER:
+            return `<div${strAttrs}></div>`;
           default:
             return content;
         }

@@ -1,6 +1,13 @@
 # Plain text
-{"entityMap":{},"blocks":[{"key":"33nh8","text":"a","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
-<p>a</p>
+{"entityMap":{},"blocks":[{"key":"4384p","text":"asdddddd","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+<p>asdddddd</p>
+
+# 中文文章
+{"entityMap":{},"blocks":[{"key":"dbnmu","text":"前端自动化测试探索","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]},{"key":"aa1c6","text":"zhangtao | 03 Jul 2015","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]},{"key":"joor","text":"背景","type":"header-two","depth":0,"inlineStyleRanges":[],"entityRanges":[]},{"key":"bge4","text":"测试是完善的研发体系中不可或缺的一环。前端同样需要测试，你的css改动可能导致页面错位、js改动可能导致功能不正常。由于前端偏向GUI软件的特殊性，尽管测试领域工具层出不穷，在前端的自动化测试上面却实施并不广泛，很多人依旧以手工测试为主。本文试图探讨前端自动化测试领域的工具和实践。","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+<p>前端自动化测试探索</p>
+<p>zhangtao | 03 Jul 2015</p>
+<h2>背景</h2>
+<p>测试是完善的研发体系中不可或缺的一环。前端同样需要测试，你的css改动可能导致页面错位、js改动可能导致功能不正常。由于前端偏向GUI软件的特殊性，尽管测试领域工具层出不穷，在前端的自动化测试上面却实施并不广泛，很多人依旧以手工测试为主。本文试图探讨前端自动化测试领域的工具和实践。</p>
 
 # Single inline style
 {"entityMap":{},"blocks":[{"key":"99n0j","text":"asdf","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":3,"length":1,"style":"BOLD"}],"entityRanges":[]}]}
@@ -31,5 +38,17 @@
 </ol>
 
 # Entity with VIDEO
-{"entityMap":{"0":{"type":"VIDEO","mutability":"IMMUTABLE","data":{"src":"blob:http%3A//localhost%3A3000/34515925-b268-4778-9bc1-416014d00163"}}},"blocks":[{"key":"5r13p","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]},{"key":"979ke","text":" ","type":"atomic","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":0,"length":1,"key":0}]},{"key":"4k5ba","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
-<video src="blob:http%3A//localhost%3A3000/34515925-b268-4778-9bc1-416014d00163" controls /><p></p>
+{"entityMap":{"0":{"type":"VIDEO","data":{"loading":false,"fakeSrc":"blob:http%3A//localhost%3A3000/c74fd0fb-97fd-4c10-ae4f-b4e2a6229a9a","src":"blob:http%3A//localhost%3A3000/c74fd0fb-97fd-4c10-ae4f-b4e2a6229a9a","fileId":"7e3a4d6ea273461086f2212c0c371f3311"}}},"blocks":[{"key":"eunbn","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]},{"key":"5d6q","text":" ","type":"atomic","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":0,"length":1,"key":0}]},{"key":"1hdfd","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+<p><br></p>
+<figure><video fileId="7e3a4d6ea273461086f2212c0c371f3311"/></figure>
+<p><br></p>
+
+# Entity with LINK & CODE
+{"entityMap":{"0":{"type":"LINK","mutability":"MUTABLE","data":{"url":"http://www.ruanyifeng.com/blog/2016/02/react-testing-tutorial.html"}}},"blocks":[{"key":"dfqkf","text":"在上面代码中，你可以看到，render方法与shallow方法的API基本是一致的。 Enzyme的设计就是，让不同的底层处理引擎，都具有同样的API（比如find方法）。","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":13,"length":6,"style":"CODE"},{"offset":22,"length":7,"style":"CODE"},{"offset":78,"length":4,"style":"CODE"}],"entityRanges":[{"offset":6,"length":18,"key":0}]}]}
+<p>在上面代码中<a href="http://www.ruanyifeng.com/blog/2016/02/react-testing-tutorial.html">，你可以看到，<code>render</code>方法与<code>sh</code></a><code>allow</code>方法的API基本是一致的。 Enzyme的设计就是，让不同的底层处理引擎，都具有同样的API（比如<code>find</code>方法）。</p>
+
+# ENTITY with HYPERLINK
+{"entityMap":{"0":{"type":"HYPERLINK","mutability":"IMMUTABLE","data":{"loading":false,"url":"http://www.ruanyifeng.com/blog/2016/02/react-testing-tutorial.html","title":"React 测试入门教程 - 阮一峰的网络日志","description":"越来越多的人，使用React开发Web应用。它的测试就成了一个大问题。","img":{"url":"http://www.ruanyifeng.com/blogimg/asset/2016/bg2016021201.png","type":"image/png","height":400,"width":720,"fileId":"7f84dbf7b49f48bd82ac8120bccfb1d411"},"fileId":"3afa35816f6746fabef45e5857adf10a07"}}},"blocks":[{"key":"3d36k","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]},{"key":"edrao","text":" ","type":"atomic","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":0,"length":1,"key":0}]},{"key":"a1k8s","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+<p><br></p>
+<figure><div tagType="HYPERLINK" fileId="7f84dbf7b49f48bd82ac8120bccfb1d411"></div></figure>
+<p><br></p>
